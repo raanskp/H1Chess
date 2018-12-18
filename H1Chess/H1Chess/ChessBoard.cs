@@ -2,6 +2,7 @@
 
 namespace H1Chess
 {
+    [Serializable]
     class ChessBoard
     {
         private const int BOARD_SIZE = 8;
@@ -43,6 +44,32 @@ namespace H1Chess
         public Piece GetPieceAt(int x, int y)
         {
             return board[y, x];
+        }
+
+        public bool MovePiece(int startX, int startY, int endX, int endY)
+        {
+            Piece currentPiece = GetPieceAt(startX, startY);
+
+            if (currentPiece == null)
+                return false;
+
+            if (currentPiece.IsValidMove(this, new Tuple<int, int>(startX, startY), new Tuple<int, int>(endX, endY)))
+            {
+                if (GetPieceAt(startX, startY) != null)
+                {
+                    // Stuff to do with moving the piece there
+                }
+
+                SetPieceAt(endX, endY, currentPiece);
+                SetPieceAt(startX, startY, null);
+            }
+
+            return true;
+        }
+
+        private void SetPieceAt(int x, int y, Piece currentPiece)
+        {
+            board[y, x] = currentPiece;
         }
     }
 }

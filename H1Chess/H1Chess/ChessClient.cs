@@ -10,6 +10,8 @@ namespace H1Chess
 {
     class ChessClient : TcpClient
     {
+        byte[] buffer = new byte[512];
+
         public ChessClient()
         {
 
@@ -17,6 +19,21 @@ namespace H1Chess
 
         public ChessBoard GetBoard()
         {
+            byte[] getBoardMessage = new byte[] { 1, 0 };
+
+            GetStream().Write(getBoardMessage, 0, getBoardMessage.Length);
+            GetStream().Read(buffer, 0, buffer.Length);
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                Console.Write("0x" + buffer[i].ToString("X") + ", ");
+
+                if (buffer[i] == 0)
+                {
+                    break;
+                }
+            }
+
             ChessBoard board = new ChessBoard();
             return board;
         }

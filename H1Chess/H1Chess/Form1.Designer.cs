@@ -33,6 +33,13 @@
             this.connectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startServerMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopServerMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectToServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.localhostConnectMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectIPMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chessImageHolder)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -40,11 +47,12 @@
             // 
             // chessImageHolder
             // 
-            this.chessImageHolder.Location = new System.Drawing.Point(14, 44);
+            this.chessImageHolder.Location = new System.Drawing.Point(12, 44);
             this.chessImageHolder.Name = "chessImageHolder";
             this.chessImageHolder.Size = new System.Drawing.Size(512, 512);
             this.chessImageHolder.TabIndex = 0;
             this.chessImageHolder.TabStop = false;
+            this.chessImageHolder.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chessImageHolder_MouseClick);
             // 
             // statusStrip
             // 
@@ -74,9 +82,66 @@
             // 
             // testToolStripMenuItem
             // 
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startServerMenu,
+            this.stopServerMenu,
+            this.connectToServerToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.testToolStripMenuItem.Text = "Test";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.testToolStripMenuItem.Text = "Connect";
+            // 
+            // startServerMenu
+            // 
+            this.startServerMenu.Name = "startServerMenu";
+            this.startServerMenu.Size = new System.Drawing.Size(180, 22);
+            this.startServerMenu.Text = "Start server";
+            this.startServerMenu.Click += new System.EventHandler(this.startServerMenu_ClickAsync);
+            // 
+            // stopServerMenu
+            // 
+            this.stopServerMenu.Name = "stopServerMenu";
+            this.stopServerMenu.Size = new System.Drawing.Size(180, 22);
+            this.stopServerMenu.Text = "Stop server";
+            this.stopServerMenu.Visible = false;
+            this.stopServerMenu.Click += new System.EventHandler(this.stopServerMenu_Click);
+            // 
+            // connectToServerToolStripMenuItem
+            // 
+            this.connectToServerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.localhostConnectMenu,
+            this.connectIPMenu});
+            this.connectToServerToolStripMenuItem.Name = "connectToServerToolStripMenuItem";
+            this.connectToServerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectToServerToolStripMenuItem.Text = "Connect to server";
+            // 
+            // localhostConnectMenu
+            // 
+            this.localhostConnectMenu.Name = "localhostConnectMenu";
+            this.localhostConnectMenu.Size = new System.Drawing.Size(180, 22);
+            this.localhostConnectMenu.Text = "Localhost";
+            this.localhostConnectMenu.Visible = false;
+            this.localhostConnectMenu.Click += new System.EventHandler(this.localhostConnectMenu_Click);
+            // 
+            // connectIPMenu
+            // 
+            this.connectIPMenu.Name = "connectIPMenu";
+            this.connectIPMenu.Size = new System.Drawing.Size(180, 22);
+            this.connectIPMenu.Text = "Enter IP";
+            this.connectIPMenu.Click += new System.EventHandler(this.enterIPToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -108,6 +173,13 @@
         private System.Windows.Forms.ToolStripStatusLabel connectionStatusLabel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startServerMenu;
+        private System.Windows.Forms.ToolStripMenuItem stopServerMenu;
+        private System.Windows.Forms.ToolStripMenuItem connectToServerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem localhostConnectMenu;
+        private System.Windows.Forms.ToolStripMenuItem connectIPMenu;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
