@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Drawing;
 
 namespace H1Chess
 {
     abstract class Piece
     {
-        MoveDirection direction;
-        PieceColor color;
+        protected MoveDirection direction;
+        protected PieceColor color;
+        protected Image pieceImageBlack;
+        protected Image pieceImageWhite;
 
         public Piece(MoveDirection direction, PieceColor color)
         {
@@ -20,6 +23,15 @@ namespace H1Chess
         {
             return color;
         }
+
+        public Image GetImage()
+        {
+            if (GetColor() == PieceColor.Black)
+                return pieceImageBlack;
+
+            return pieceImageWhite;
+        }
+
         public abstract string GetRepresentation();
         public abstract bool IsValidMove(ChessBoard board, Tuple<int, int> startPosition, Tuple<int, int> endPosition);
     }
