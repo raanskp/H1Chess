@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace H1Chess.Pieces
 {
+    [Serializable()]
     class Pawn : Piece
     {
         public Pawn(MoveDirection direction, PieceColor color) : base(direction, color)

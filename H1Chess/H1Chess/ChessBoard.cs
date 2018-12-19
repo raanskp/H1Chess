@@ -2,12 +2,13 @@
 
 namespace H1Chess
 {
-    [Serializable]
+    [Serializable()]
     class ChessBoard
     {
         private const int BOARD_SIZE = 8;
 
-        private Piece[,] board;
+        public Piece[,] board;
+        public string test = "hej";
         
         public ChessBoard()
         {
@@ -51,15 +52,19 @@ namespace H1Chess
             Piece currentPiece = GetPieceAt(startX, startY);
 
             if (currentPiece == null)
+            {
+                Console.WriteLine("Piece was null");
                 return false;
-
+            }
+                
             if (currentPiece.IsValidMove(this, new Tuple<int, int>(startX, startY), new Tuple<int, int>(endX, endY)))
             {
-                if (GetPieceAt(startX, startY) != null)
+                if (GetPieceAt(endX, endY) != null)
                 {
-                    // Stuff to do with moving the piece there
+                    Console.WriteLine("Moving the piece to a place where there is a " + GetPieceAt(endX, endY).GetRepresentation());
                 }
 
+                Console.WriteLine("Moving the piece to it's place");
                 SetPieceAt(endX, endY, currentPiece);
                 SetPieceAt(startX, startY, null);
             }

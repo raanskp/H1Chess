@@ -3,7 +3,8 @@ using System.Drawing;
 
 namespace H1Chess.Pieces
 {
-    internal class Bishop : Piece
+    [Serializable()]
+    class Bishop : Piece
     {
         public Bishop(MoveDirection direction, PieceColor color) : base(direction, color)
         {

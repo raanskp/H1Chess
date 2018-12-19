@@ -3,6 +3,7 @@ using System.Drawing;
 
 namespace H1Chess
 {
+    [Serializable()]
     abstract class Piece
     {
         protected MoveDirection direction;

@@ -3,7 +3,8 @@ using System.Drawing;
 
 namespace H1Chess.Pieces
 {
-    internal class Rook : Piece
+    [Serializable()]
+    class Rook : Piece
     {
         public Rook(MoveDirection direction, PieceColor color) : base(direction, color)
         {

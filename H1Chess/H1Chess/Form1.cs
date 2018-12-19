@@ -103,6 +103,10 @@ namespace H1Chess
             }
             else
             {
+                if (mouseClickX != -1 && mouseClickY != -1)
+                {
+                    chessClient.MovePiece(new Tuple<int, int>(mouseClickX, mouseClickY), new Tuple<int, int>(newMouseX, newMouseY));
+                }
                 mouseClickX = newMouseX;
                 mouseClickY = newMouseY;
             }
