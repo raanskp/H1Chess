@@ -95,14 +95,14 @@
             // startServerMenu
             // 
             this.startServerMenu.Name = "startServerMenu";
-            this.startServerMenu.Size = new System.Drawing.Size(180, 22);
+            this.startServerMenu.Size = new System.Drawing.Size(167, 22);
             this.startServerMenu.Text = "Start server";
             this.startServerMenu.Click += new System.EventHandler(this.startServerMenu_ClickAsync);
             // 
             // stopServerMenu
             // 
             this.stopServerMenu.Name = "stopServerMenu";
-            this.stopServerMenu.Size = new System.Drawing.Size(180, 22);
+            this.stopServerMenu.Size = new System.Drawing.Size(167, 22);
             this.stopServerMenu.Text = "Stop server";
             this.stopServerMenu.Visible = false;
             this.stopServerMenu.Click += new System.EventHandler(this.stopServerMenu_Click);
@@ -113,13 +113,13 @@
             this.localhostConnectMenu,
             this.connectIPMenu});
             this.connectToServerToolStripMenuItem.Name = "connectToServerToolStripMenuItem";
-            this.connectToServerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectToServerToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.connectToServerToolStripMenuItem.Text = "Connect to server";
             // 
             // localhostConnectMenu
             // 
             this.localhostConnectMenu.Name = "localhostConnectMenu";
-            this.localhostConnectMenu.Size = new System.Drawing.Size(180, 22);
+            this.localhostConnectMenu.Size = new System.Drawing.Size(125, 22);
             this.localhostConnectMenu.Text = "Localhost";
             this.localhostConnectMenu.Visible = false;
             this.localhostConnectMenu.Click += new System.EventHandler(this.localhostConnectMenu_Click);
@@ -127,19 +127,19 @@
             // connectIPMenu
             // 
             this.connectIPMenu.Name = "connectIPMenu";
-            this.connectIPMenu.Size = new System.Drawing.Size(180, 22);
+            this.connectIPMenu.Size = new System.Drawing.Size(125, 22);
             this.connectIPMenu.Text = "Enter IP";
             this.connectIPMenu.Click += new System.EventHandler(this.enterIPToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(164, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -153,7 +153,7 @@
             this.Controls.Add(this.chessImageHolder);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Chess game v0.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chessImageHolder)).EndInit();

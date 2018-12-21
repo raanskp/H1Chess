@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace H1Chess.Pieces
 {
@@ -21,7 +22,7 @@ namespace H1Chess.Pieces
             return "queen";
         }
 
-        public override bool IsValidMove(ChessBoard board, Tuple<int, int> startPosition, Tuple<int, int> endPosition)
+        public override bool IsValidMove(ChessBoard board, Vector startPosition, Vector endPosition)
         {
             return false;
         }

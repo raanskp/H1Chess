@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows;
 
 namespace H1Chess
 {
@@ -34,7 +35,7 @@ namespace H1Chess
         }
 
         public abstract string GetRepresentation();
-        public abstract bool IsValidMove(ChessBoard board, Tuple<int, int> startPosition, Tuple<int, int> endPosition);
+        public abstract bool IsValidMove(ChessBoard board, Vector startPosition, Vector endPosition);
     }
 
     enum MoveDirection

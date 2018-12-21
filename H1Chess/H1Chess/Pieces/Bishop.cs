@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows;
 
 namespace H1Chess.Pieces
 {
@@ -17,9 +18,36 @@ namespace H1Chess.Pieces
             return "bishop";
         }
 
-        public override bool IsValidMove(ChessBoard board, Tuple<int, int> startPosition, Tuple<int, int> endPosition)
+        public override bool IsValidMove(ChessBoard board, Vector startPosition, Vector endPosition)
         {
-            return false;
+            // Moving the brick to the same position is no movement and therefore not a valid move
+            if (startPosition == endPosition)
+                return false;
+
+            // If it is not a diagonal angle, then it is not valid
+            if (Vector.AngleBetween(startPosition, endPosition) % 90 != 45)
+                return false;
+
+            // The direction that the piece will move in
+            Vector directional = endPosition - startPosition;
+            directional.Normalize();
+
+            // Move the brick and see if there are pieces inbetween
+            Vector step = startPosition;
+            while (step != endPosition)
+            {
+                if (board.GetPieceAt(step) != null)
+                {
+                    return false;
+                }
+                step += directional;
+            }
+
+            // If it is a piece of same color as this brick, don't move atop it
+            if (board.GetPieceAt(endPosition) != null && board.GetPieceAt(endPosition).GetColor() == GetColor())
+                return false;
+
+            return true;
         }
     }
 }

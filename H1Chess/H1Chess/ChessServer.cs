@@ -31,12 +31,13 @@ namespace H1Chess
         ChessBoard board = new ChessBoard();
         bool isRunning = true;
 
+        // We use a thread safe queue for the players that connect, because we'd eventually want to make it possible for 
+        // multiple pairs of players to connect. They will then be placed in a queue waiting for another player to connect.
         ConcurrentQueue<TcpClient> playerQueue = new ConcurrentQueue<TcpClient>();
 
         public ChessServer(IPEndPoint localEP) : base(localEP)
         {
             board = new ChessBoard();
-            board.MovePiece(1, 1, 1, 2);
         }
         
         public async Task Run()
@@ -48,39 +49,42 @@ namespace H1Chess
             {
                 foreach (TcpClient client in playerQueue)
                 {
-                    
+                    // Anything we'd want to do for each connected player, but which is not handled in the main listener loop.
                 }
                 System.Threading.Thread.Sleep(100);
             }
         }
 
+        /// <summary>
+        /// Stops the server.
+        /// </summary>
         public new void Stop()
         {
             base.Stop();
-            Console.WriteLine("Stopping server");
             isRunning = false;
         }
 
+
+        /// <summary>
+        /// Main listener thread for each client.
+        /// </summary>
+        /// <param name="client">The client we are handling</param>
+        /// <returns></returns>
         public async Task ClientListener(TcpClient client)
         {
             byte[] buffer = new byte[256];
 
-            while (true)
+            while (isRunning)
             {
-                Console.WriteLine("Waiting for message...");
                 Data message = await GetMessage(buffer, client);
                 buffer = message.buffer;
-                Console.WriteLine("Got message: " + Encoding.UTF8.GetString(message.message));
 
                 switch (Encoding.UTF8.GetString(message.message).Split(' ')[0])
                 {
                     case "getboard":
-                        BinaryFormatter f = new BinaryFormatter();
-                        f.Serialize(client.GetStream(), board);
-                        Console.WriteLine("Done serializing");
+                        SendMessageAsync(client.GetStream(), "board " + board.GetNetworkString());
                         break;
                     case "movepiece":
-                        Console.WriteLine("Got move request");
                         int startX = int.Parse(Encoding.UTF8.GetString(message.message).Split(' ')[1].Split(',')[0]);
                         int startY = int.Parse(Encoding.UTF8.GetString(message.message).Split(' ')[1].Split(',')[1]);
                         int endX = int.Parse(Encoding.UTF8.GetString(message.message).Split(' ')[2].Split(',')[0]);
@@ -88,29 +92,35 @@ namespace H1Chess
                         bool result = board.MovePiece(startX, startY, endX, endY);
                         if (result)
                         {
-                            SendMessage(client.GetStream(), "OK");
+                            SendMessageAsync(client.GetStream(), string.Format("moveok {0},{1},{2},{3}", startX, startY, endX, endY));
                         }
                         else
                         {
-                            SendMessage(client.GetStream(), "BAD");
+                            SendMessageAsync(client.GetStream(), string.Format("movebad {0},{1},{2},{3}", startX, startY, endX, endY));
                         }
                         break;
                     default:
-                        client.GetStream().Write(Encoding.UTF8.GetBytes("Unknown message"), 0, Encoding.UTF8.GetBytes("Unknown message").Length);
+                        SendMessageAsync(client.GetStream(), "badmessage");
                         break;
                 }
             }
         }
 
-        private void SendMessage(NetworkStream stream, string message)
+        private async Task SendMessageAsync(NetworkStream stream, string message)
         {
             // Allocate a buffer one larger than the encoded message (for a null terminator)
             byte[] buffer = new byte[Encoding.UTF8.GetByteCount(message) + 1];
 
             Encoding.UTF8.GetBytes(message, 0, message.Length, buffer, 0);
-            stream.Write(buffer, 0, buffer.Length);
+            await stream.WriteAsync(buffer, 0, buffer.Length);
         }
 
+        /// <summary>
+        /// Helper function to get a message from the stream. Messages are seperated by the byte value 0.
+        /// </summary>
+        /// <param name="buffer">The buffer that holds the rest of the old message.</param>
+        /// <param name="client">The client we are listening to.</param>
+        /// <returns></returns>
         private async Task<Data> GetMessage(byte[] buffer, TcpClient client)
         {
             List<byte> message = new List<byte>();
@@ -137,7 +147,8 @@ namespace H1Chess
                     int length = await client.GetStream().ReadAsync(buffer, 0, buffer.Length);
                 }
             }
-
+            
+            // Move all the elements in the array back towards index 0
             int startPosition = message.Count % buffer.Length;
             byte start = buffer[0];
             for (int i = startPosition + 1; i < buffer.Length; i++)
@@ -149,21 +160,10 @@ namespace H1Chess
             return new Data(message.ToArray(), buffer);
         }
 
-        private void WriteBoard(NetworkStream networkStream)
-        {
-            byte[] boardBuffer = new byte[256];
-            int bufferIndex = 0;
-
-            for (byte y = 0; y < 8; y++)
-            {
-                for (byte x = 0; x < 8; x++)
-                {
-                    boardBuffer[bufferIndex++] = y;
-                    boardBuffer[bufferIndex++] = x;
-                }
-            }
-        }
-
+        /// <summary>
+        /// Handler function for each client that connects.
+        /// </summary>
+        /// <returns></returns>
         public async Task AcceptChessClientsAsync()
         {
             while (isRunning)
@@ -171,7 +171,7 @@ namespace H1Chess
                 Console.WriteLine("Awaiting clients");
                 TcpClient client = await AcceptTcpClientAsync();
                 Console.WriteLine("Client has connected to the chess server (" + client.Client.RemoteEndPoint + ")");
-                await ClientListener(client);
+                ClientListener(client);
                 playerQueue.Enqueue(client);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows;
 
 namespace H1Chess.Pieces
 {
@@ -17,7 +18,7 @@ namespace H1Chess.Pieces
             return "rook";
         }
 
-        public override bool IsValidMove(ChessBoard board, Tuple<int, int> startPosition, Tuple<int, int> endPosition)
+        public override bool IsValidMove(ChessBoard board, Vector startPosition, Vector endPosition)
         {
             return false;
         }
