@@ -24,16 +24,19 @@ namespace H1Chess.Pieces
             if (startPosition == endPosition)
                 return false;
 
-            // If it is not a diagonal angle, then it is not valid
-            if (Vector.AngleBetween(startPosition, endPosition) % 90 != 45)
-                return false;
-
             // The direction that the piece will move in
             Vector directional = endPosition - startPosition;
             directional.Normalize();
 
+            // If it is not a diagonal angle, then it is not valid
+            if (Vector.AngleBetween(new Vector(1, 0), directional) % 90 != 45)
+                return false;
+
+            // We transform the direction into full steps (and we can do this, cuz we know by now it's actually a diagonal)
+            directional = new Vector(Math.Ceiling(directional.X), Math.Ceiling(directional.Y));
+
             // Move the brick and see if there are pieces inbetween
-            Vector step = startPosition;
+            Vector step = startPosition + directional;
             while (step != endPosition)
             {
                 if (board.GetPieceAt(step) != null)

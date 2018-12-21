@@ -31,11 +31,11 @@ namespace H1Chess.Pieces
             // No matter the endPosition, we cannot move onto a piece of our own color
             if (board.GetPieceAt(endPosition) != null && board.GetPieceAt(endPosition).GetColor() == GetColor())
                 return false;
-
+            
             // If we move down on the board, but the vector is up, it's not a valid move and vice versa
-            if (GetDirection() == MoveDirection.Down && directionVector.Y <= 0)
+            if (GetDirection() == MoveDirection.Down && directionVector.Y >= 0)
                 return false;
-            if (GetDirection() == MoveDirection.Up && directionVector.Y >= 0)
+            if (GetDirection() == MoveDirection.Up && directionVector.Y <= 0)
                     return false;
 
             // We cannot ever move more than one unit to the side

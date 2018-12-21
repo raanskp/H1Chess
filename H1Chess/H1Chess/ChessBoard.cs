@@ -81,14 +81,12 @@ namespace H1Chess
                     y = int.Parse(pieceInfo[2]);
                 } catch (FormatException e)
                 {
-                    Console.WriteLine("Invalid position string for the piece " + piece);
                     continue;
                 }
                 
                 // No positioning outside of the board
                 if (x >= BOARD_SIZE || x < 0 || y >= BOARD_SIZE || y < 0)
                 {
-                    Console.WriteLine("Invalid position string for the piece " + piece);
                     continue;
                 }
 
